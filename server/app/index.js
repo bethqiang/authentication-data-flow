@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 
 var app = require('express')();
 var path = require('path');
@@ -7,6 +7,7 @@ var User = require('../api/users/user.model');
 app.use(require('./logging.middleware'));
 app.use(require('./request-state.middleware'));
 app.use(require('./statics.middleware'));
+app.use(require('./session.middleware'));
 
 app.use('/api', require('../api/api.router'));
 
