@@ -41,4 +41,11 @@ router.post('/signup', function(req, res, next) {
   .catch(next);
 });
 
+router.get('/logout', function(req, res, next) {
+  if (req.session) {
+    req.session.userId = null;
+    res.sendStatus(204);
+  }
+});
+
 module.exports = router;

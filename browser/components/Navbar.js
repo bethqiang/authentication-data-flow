@@ -1,6 +1,8 @@
 import React from 'react';
-import { connect } from'react-redux';
+import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
+
+import { logout } from '../redux/auth';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -61,7 +63,7 @@ class Navbar extends React.Component {
     return (
       <ul className="nav navbar-nav navbar-right">
         <li>
-        <button className="navbar-btn btn btn-default" 
+        <button className="navbar-btn btn btn-default"
           onClick={this.props.logout}>logout</button>
         </li>
       </ul>
@@ -74,10 +76,11 @@ class Navbar extends React.Component {
 const mapProps = null;
 
 const mapDispatch = dispatch => ({
-  logout: () => {
-    console.log('You signed out. Sorta.')
+  logout() {
+    console.log('Logout submitted.');
+    dispatch(logout());
     browserHistory.push('/');
   }
-})
+});
 
 export default connect(mapProps, mapDispatch)(Navbar);
