@@ -24,7 +24,16 @@ export const login = ({ email, password }) => {
   console.log('Login working');
   return function(dispatch) {
     axios.post('/auth/login', { email, password })
-    .then(res => res.data)
-    .then(user => dispatch(setUser(user)));
+    .then(res => dispatch(setUser(res.data)))
+    .catch(err => console.error('Login unsuccessful', err));
+  };
+};
+
+export const signup = ({ email, password }) => {
+  console.log('Signup working');
+  return function(dispatch) {
+    axios.post('/auth/signup', {email, password })
+    .then(res => dispatch(setUser(res.data)))
+    .catch(err => console.error('Signup unsuccessful', err));
   };
 };

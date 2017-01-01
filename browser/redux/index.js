@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import users from './users';
 import stories from './stories';
-import login from './login';
+import auth from './auth';
 
-export default combineReducers({ users, stories, login });
+export default combineReducers({ users, stories, auth });
