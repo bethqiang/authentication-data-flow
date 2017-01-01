@@ -20,4 +20,25 @@ router.post('/login', function(req, res, next) {
   .catch(next);
 });
 
+router.post('/signup', function(req, res, next) {
+  User.findOrCreate({
+    where: {
+      email: req.body.email
+    },
+    defaults: {
+      password: req.body.password
+    }
+  })
+  .then(result => {
+    const [user] = result;
+    if (!user) {
+      res.sendStatus(401);
+    } else {
+      req.session.userId = user.id;
+      res.sendStatus(200);
+    }
+  })
+  .catch(next);
+});
+
 module.exports = router;

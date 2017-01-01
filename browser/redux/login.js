@@ -23,7 +23,7 @@ export default function reducer(currentUser = {}, action) {
 export const login = ({ email, password }) => {
   console.log('Login working');
   return function(dispatch) {
-    axios.post('/login', { email, password })
+    axios.post('/auth/login', { email, password })
     .then(res => res.data)
     .then(user => dispatch(setUser(user)));
   };

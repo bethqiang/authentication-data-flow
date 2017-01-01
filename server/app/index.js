@@ -10,7 +10,7 @@ app.use(require('./statics.middleware'));
 app.use(require('./session.middleware'));
 
 app.use('/api', require('../api/api.router'));
-app.use(require('./login'));
+app.use('/auth', require('../auth'));
 
 var validFrontendRoutes = ['/', '/stories', '/users', '/stories/:id', '/users/:id', '/signup', '/login'];
 var indexPath = path.join(__dirname, '..', '..', 'browser', 'index.html');
