@@ -60,15 +60,6 @@ router.get('/me', function(req, res, next) {
   }
 });
 
-// Google authentication and login
-router.get('/google', passport.authenticate('google', { scope: 'email' }));
-
-// Handle the callback after Google has authenticated the user
-router.get('/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
+router.use('/google', require('./google'));
 
 module.exports = router;

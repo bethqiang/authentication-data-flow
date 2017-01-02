@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const app = require('express')();
 const passport = require('passport');
 const path = require('path');
