@@ -1,13 +1,18 @@
 'use strict';
 
-var app = require('express')();
-var path = require('path');
-var User = require('../api/users/user.model');
+const app = require('express')();
+const passport = require('passport');
+const path = require('path');
 
 app.use(require('./logging.middleware'));
 app.use(require('./request-state.middleware'));
 app.use(require('./statics.middleware'));
 app.use(require('./session.middleware'));
+
+// Integrate passport into middleware
+// Relies on existing session architecture, so needs to come after express session middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api', require('../api/api.router'));
 app.use('/auth', require('../auth'));

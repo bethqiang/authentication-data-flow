@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const passport = require('passport');
 
 const User = require('../api/users/user.model');
 
@@ -58,5 +59,16 @@ router.get('/me', function(req, res, next) {
     res.sendStatus(401);
   }
 });
+
+// Google authentication and login
+router.get('/google', passport.authenticate('google', { scope: 'email' }));
+
+// Handle the callback after Google has authenticated the user
+router.get('/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })
+);
 
 module.exports = router;
