@@ -48,4 +48,15 @@ router.get('/logout', function(req, res, next) {
   }
 });
 
+router.get('/me', function(req, res, next) {
+  if (req.session.userId) {
+    User.findById(req.session.userId)
+    .then(user => {
+      res.json(user);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 module.exports = router;
