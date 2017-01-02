@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
 
 const User = require('../api/users/user.model');
 
@@ -14,8 +13,10 @@ router.post('/login', function(req, res, next) {
     if (!user) {
       res.sendStatus(401);
     } else {
-      req.session.userId = user.id;
-      res.sendStatus(200);
+      req.logIn(user, function(err) {
+        if (err) return next(err);
+        res.json(user);
+      });
     }
   })
   .catch(next);
@@ -30,31 +31,23 @@ router.post('/signup', function(req, res, next) {
       password: req.body.password
     }
   })
-  .then(result => {
-    const [user] = result;
-    if (!user) {
-      res.sendStatus(401);
-    } else {
-      req.session.userId = user.id;
-      res.sendStatus(200);
-    }
+  .spread(user => {
+    req.logIn(user, function(err) {
+      if (err) return next(err);
+      res.json(user);
+    });
   })
   .catch(next);
 });
 
 router.get('/logout', function(req, res, next) {
-  if (req.session) {
-    req.session.userId = null;
-    res.sendStatus(204);
-  }
+  req.logOut();
+  res.sendStatus(204);
 });
 
 router.get('/me', function(req, res, next) {
-  if (req.session.userId) {
-    User.findById(req.session.userId)
-    .then(user => {
-      res.json(user);
-    });
+  if (req.user) {
+    res.json(req.user);
   } else {
     res.sendStatus(401);
   }
